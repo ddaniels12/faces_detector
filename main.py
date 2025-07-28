@@ -1,5 +1,3 @@
-# pip install opencv-python numpy
-# pip install numpy
 # C:/Users/david/AppData/Local/Microsoft/WindowsApps/python3.13.exe -m pip install opencv-python numpy
 
 import cv2
