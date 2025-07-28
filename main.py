@@ -1,16 +1,10 @@
 # pip install opencv-python numpy
+# pip install numpy
 # C:/Users/david/AppData/Local/Microsoft/WindowsApps/python3.13.exe -m pip install opencv-python numpy
+
 import cv2
 import numpy as np
 import os
-
-# --- MEJORA: Usar un detector de caras basado en Redes Neuronales (DNN) ---
-# Este método es más preciso y robusto que los Haar Cascades.
-# Necesitarás descargar los archivos del modelo:
-# 1. Prototxt (definición de la arquitectura): deploy.prototxt.txt
-# 2. CaffeModel (pesos pre-entrenados): res10_300x300_ssd_iter_140000.caffemodel
-# Puedes encontrarlos en el repositorio de OpenCV o buscarlos en internet.
-# Por conveniencia, crea una carpeta 'model' y ponlos ahí.
 
 # Rutas a los archivos del modelo
 proto_path = os.path.join('model', 'deploy.prototxt.txt')
@@ -57,16 +51,14 @@ while True:
         # Extraer la confianza (probabilidad) de la detección
         confidence = detections[0, 0, i, 2]
 
-        # Filtrar detecciones débiles asegurando que la confianza sea
-        # mayor que un umbral mínimo (ej. 50%)
+        # Filtrar detecciones débiles asegurando que la confianza sea mayor a 50%
         if confidence > 0.5:
             faces_count += 1
             # Calcular las coordenadas (x, y) del cuadro delimitador
             box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
             (startX, startY, endX, endY) = box.astype("int")
 
-            # --- MEJORA: DIBUJAR TEXTO CON LA CONFIANZA ---
-            # Crear el texto que se mostrará (ej: "99.85%")
+            # Crear el texto que se mostrará %
             text = f"{confidence * 100:.2f}%"
             # Coordenada Y para el texto (un poco arriba del rectángulo)
             y = startY - 10 if startY - 10 > 10 else startY + 10
